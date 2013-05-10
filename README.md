@@ -20,3 +20,14 @@ Redis works as a nice conduit for manipulating large datasets from couch. My app
 * Use node script to loop through the rest of the keys stored on Redis (KEYS *), accumulate a bulk number of docs, use the bulk save command and pass a json object back to couch {_id: idFromRedis, _deleted: true}
 
 * Run FLUSHDB on redis.
+
+# Future
+
+I've had a lot of ideas for this. 
+
+* Perhaps there could be other backends that are leveraged, but Redis is nice. 
+* Couchin project 
+* Port this to node js? 
+* It might also be a good idea to just have Go store the data in memory and then hit a custom js file of your choosing and map over it or something. 
+
+Anyway, feedback/patches appreciated.
