@@ -6,6 +6,14 @@ This will stream all of the docs into Redis as Base64 format.
 couchout --url http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
 ```
 
+# Install
+
+```
+git clone git@github.com:lancecarlson/couchout.go.git
+cd couchout.go
+go build -o couchgo # Builds a binary file for you. Put this in one of your PATH directories
+```
+
 # Why?
 
 Redis works as a nice conduit for manipulating large datasets from couch. My approach is as follows:
