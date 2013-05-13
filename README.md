@@ -6,6 +6,13 @@ This will stream all of the docs into Redis as Base64 format. See sister project
 couchout --url http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
 ```
 
+Full usage with your own custom node script and couchin might look like this:
+
+```
+DB="http://localhost:5984/db"
+couchout --url $DB/_all_docs?include_docs=true | redis-cli && node update.js && couchin --save-url $DB/_bulk_docs
+```
+
 # Install
 
 ```
