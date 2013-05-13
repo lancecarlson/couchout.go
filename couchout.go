@@ -33,7 +33,7 @@ func main() {
 	flag.Parse()
 	resp, err := http.Get(*url)
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	r := bufio.NewReader(resp.Body)
 	line, err := r.ReadString('\n')
