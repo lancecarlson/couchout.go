@@ -36,8 +36,7 @@ Redis works as a nice conduit for manipulating large datasets from couch. My app
 I've had a lot of ideas for this. 
 
 * Perhaps there could be other backends that are leveraged, but Redis is nice. 
-* Couchin project 
-* Port this to node js? 
+* Port this to node js?
 * It might also be a good idea to just have Go store the data in memory and then hit a custom js file of your choosing and map over it or something. 
 
 Anyway, feedback/patches appreciated.
