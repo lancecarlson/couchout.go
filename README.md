@@ -16,7 +16,7 @@ couchout --url $DB/_all_docs?include_docs=true | redis-cli && node update.js && 
 # Install
 
 ```
-git clone git@github.com:lancecarlson/couchout.go.git
+git clone https://github.com/lancecarlson/couchout.go
 cd couchout.go
 go build -o couchout # Builds a binary file for you. Put this in one of your PATH directories
 ```
