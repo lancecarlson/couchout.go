@@ -1,6 +1,6 @@
 # Usage
 
-This will stream all of the docs into Redis as Base64 format.
+This will stream all of the docs into Redis as Base64 format. See sister project, [couchin](https://github.com/lancecarlson/couchin.go) for importing documents back into couch.
 
 ```
 couchout --url http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
@@ -11,7 +11,7 @@ couchout --url http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
 ```
 git clone git@github.com:lancecarlson/couchout.go.git
 cd couchout.go
-go build -o couchgo # Builds a binary file for you. Put this in one of your PATH directories
+go build -o couchout # Builds a binary file for you. Put this in one of your PATH directories
 ```
 
 # Why?
