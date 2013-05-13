@@ -29,10 +29,7 @@ Redis works as a nice conduit for manipulating large datasets from couch. My app
 2. Use couchout to export the data to Redis in Base64 format
 3. Make a node script (js has nice object merging syntax) that grabs the updated data set from somewhere
 4. Use node script to loop through new data set, call GET key in Redis for each updated doc, decode base64 value, apply merge changes
-5. Accumulate a bulk number of docs (maybe 100-1000), bulk save to couch, then DEL key from Redis (or FLUSHDB at the end)
-
-Instead of making your own custom #5 step, you can use [couchin](https://github.com/lancecarlson/couchin.go)
-
+5. Accumulate a bulk number of docs (maybe 100-1000), bulk save to couch, then DEL key from Redis (or FLUSHDB at the end) OR you can use [couchin](https://github.com/lancecarlson/couchin.go)
 
 # Future
 
