@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,22 +24,47 @@ type Row struct {
 }
 
 type Response struct {
-	TotalRows int
+	TotalRows int `json:"total_rows"`
 	Offset int
-	Rows []Row
+//	Rows []Row
+}
+
+func ParseResponse(line string) (response *Response, err error) {
+	if line[len(line)-1:len(line)] == ":" {
+		line = line + "["
+	}
+	line = line + "]}"
+	response = &Response{}
+	err = json.Unmarshal([]byte(line), response)
+	return 
 }
 
 func main() {
-	url := flag.String("url", "", "for the couchdb database")
+	flag.Usage = func() {
+                fmt.Fprintf(os.Stderr, "Usage of %s [options] [url]:\n", os.Args[0])
+		flag.PrintDefaults()
+        }
 	flag.Parse()
-	resp, err := http.Get(*url)
+	url := flag.Arg(0)
+
+	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	r := bufio.NewReader(resp.Body)
 	line, err := r.ReadString('\n')
+	firstLine := true
 	for err == nil {
 		line = line[:len(line)-3]
+		if firstLine {
+			firstLine = false
+			response, err := ParseResponse(line)
+			if err != nil { log.Fatal(err) }
+			if response.TotalRows == 0 {
+				log.Fatal("0 rows to parse")
+			}
+		}
 
 		row := &Row{}
 		err = json.Unmarshal([]byte(line), row)

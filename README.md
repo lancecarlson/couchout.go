@@ -3,14 +3,14 @@
 This will stream all of the docs into Redis as Base64 format. See sister project, [couchin](https://github.com/lancecarlson/couchin.go) for importing documents back into couch.
 
 ```
-couchout --url http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
+couchout http://localhost:5984/db/_all_docs?include_docs=true | redis-cli
 ```
 
 Full usage with your own custom node script and couchin might look like this:
 
 ```
 DB="http://localhost:5984/db"
-couchout --url $DB/_all_docs?include_docs=true | redis-cli && node update.js && couchin $DB/_bulk_docs
+redis-cli flushdb && couchout $DB/_all_docs?include_docs=true | redis-cli && node update.js && couchin $DB/_bulk_docs
 ```
 
 # Install
@@ -23,9 +23,11 @@ go build -o couchout # Builds a binary file for you. Put this in one of your PAT
 
 # Why?
 
-Redis works as a nice conduit for manipulating large datasets from couch. My approach is as follows:
+Redis works as a nice conduit for manipulating large datasets from couch. By sticking your data in Redis, you get the ability to make language agnostic scripts and also separate out data manipulation into separate processes. Your only limitation is the memory on the box. 
 
-1. Define a view or use _all_docs to fetch all of the documents I want to modify
+My approach is as follows:
+
+1. Define a view or use _all_docs to fetch all of the documents I want to modify. Make sure to set include_docs=true and if you have a dataset that is huge, you should consider specifying a limit to the query string. My experience has been that Redis is pretty efficient even with several million docs.
 2. Use couchout to export the data to Redis in Base64 format
 3. Make a node script (js has nice object merging syntax) that grabs the updated data set from somewhere
 4. Use node script to loop through new data set, call GET key in Redis for each updated doc, decode base64 value, apply merge changes
